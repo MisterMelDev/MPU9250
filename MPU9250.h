@@ -68,8 +68,9 @@ public:
         m_whoami = isConnectedMPU9250();
         if (m_whoami)
         {
-            Serial.println("MPU9250 is online...");
-            initMPU9250();
+            //Serial.println("MPU9250 is online...");
+			Serial.println("MSGMPU9250 OK");
+			initMPU9250();
 
             a_whoami = isConnectedAK8963();
             if (a_whoami)
@@ -78,13 +79,13 @@ public:
             }
             else
             {
-                Serial.print("Could not connect to AK8963: 0x");
+                Serial.print("MGGAK8963 FAIL: 0x");
                 Serial.println(a_whoami);
             }
         }
         else
         {
-            Serial.print("Could not connect to MPU9250: 0x");
+            Serial.print("MSGMPU9250 FAIL: 0x");
             Serial.println(m_whoami);
         }
     }
@@ -102,16 +103,16 @@ public:
     bool isConnectedMPU9250()
     {
         byte c = readByte(MPU9250_ADDRESS, WHO_AM_I_MPU9250);
-        Serial.print("MPU9250 WHO AM I = ");
-        Serial.println(c, HEX);
+        /*Serial.print("MPU9250 WHO AM I = ");
+        Serial.println(c, HEX);*/
         return (c == MPU9250_WHOAMI_DEFAULT_VALUE);
     }
 
     bool isConnectedAK8963()
     {
         byte c = readByte(AK8963_ADDRESS, AK8963_WHO_AM_I);
-        Serial.print("AK8963  WHO AM I = ");
-        Serial.println(c, HEX);
+        /*Serial.print("AK8963  WHO AM I = ");
+        Serial.println(c, HEX);*/
         return (c == AK8963_WHOAMI_DEFAULT_VALUE);
     }
 
@@ -395,13 +396,13 @@ private:
         writeByte(AK8963_ADDRESS, AK8963_CNTL, (uint8_t)MFSSEL << 4 | Mmode); // Set magnetometer data resolution and sample ODR
         delay(10);
 
-        Serial.println("Calibration values: ");
+        /*Serial.println("Calibration values: ");
         Serial.print("X-Axis sensitivity adjustment value "); Serial.println(destination[0], 2);
         Serial.print("Y-Axis sensitivity adjustment value "); Serial.println(destination[1], 2);
         Serial.print("Z-Axis sensitivity adjustment value "); Serial.println(destination[2], 2);
         Serial.print("X-Axis sensitivity offset value "); Serial.println(magBias[0], 2);
         Serial.print("Y-Axis sensitivity offset value "); Serial.println(magBias[1], 2);
-        Serial.print("Z-Axis sensitivity offset value "); Serial.println(magBias[2], 2);
+        Serial.print("Z-Axis sensitivity offset value "); Serial.println(magBias[2], 2);*/
     }
 
     void magcalMPU9250(float * dest1, float * dest2)
@@ -776,12 +777,12 @@ private:
             SelfTestResult[i+3] = 100.0 * ((float)(gSTAvg[i] - gAvg[i])) / factoryTrim[i+3] - 100.; // Report percent differences
         }
 
-        Serial.print("x-axis self test: acceleration trim within : "); Serial.print(SelfTestResult[0], 1); Serial.println("% of factory value");
+        /*Serial.print("x-axis self test: acceleration trim within : "); Serial.print(SelfTestResult[0], 1); Serial.println("% of factory value");
         Serial.print("y-axis self test: acceleration trim within : "); Serial.print(SelfTestResult[1], 1); Serial.println("% of factory value");
         Serial.print("z-axis self test: acceleration trim within : "); Serial.print(SelfTestResult[2], 1); Serial.println("% of factory value");
         Serial.print("x-axis self test: gyration trim within : "); Serial.print(SelfTestResult[3], 1); Serial.println("% of factory value");
         Serial.print("y-axis self test: gyration trim within : "); Serial.print(SelfTestResult[4], 1); Serial.println("% of factory value");
-        Serial.print("z-axis self test: gyration trim within : "); Serial.print(SelfTestResult[5], 1); Serial.println("% of factory value");
+        Serial.print("z-axis self test: gyration trim within : "); Serial.print(SelfTestResult[5], 1); Serial.println("% of factory value");*/
         delay(5000);
     }
 
@@ -825,8 +826,8 @@ private:
     void pirntI2CError()
     {
         if (i2c_err_ == 7) return; // to avoid stickbreaker-i2c branch's error code
-        Serial.print("I2C ERROR CODE : ");
-        Serial.println(i2c_err_);
+        /*Serial.print("I2C ERROR CODE : ");
+        Serial.println(i2c_err_);*/
     }
 
 
